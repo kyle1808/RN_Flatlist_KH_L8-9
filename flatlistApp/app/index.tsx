@@ -16,7 +16,7 @@ export default function Index() {
       </View>
       <View style={[defaultStyles.textContainer, { flex: 1 }]}>
         <View style={styles.flatlist}>
-          <Text>This is where our list will go</Text>
+          <Text>This is where our list will go!</Text>
         </View>
       </View>
     </View>
