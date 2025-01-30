@@ -8,23 +8,15 @@ import {
 import colors from "../styles/colors";
 import defaultStyles from "../styles/defaultStyles";
 import { useState } from "react";
+import ListItemSeparator from "@/components/ListItemSeparator";
+import ListItem from "@/components/ListItem";
+import { dataType, DATA } from "@/data/appData"
 
 export default function Index() {
 
-  type dataType = {
-    id: string; // Unique indentifier
-    title: string, // What is displayed to the screen
-  }
-
-  const DATA: dataType[] = [
-    {id: "1", title: "First Item"},
-    {id: "2", title: "Second Item"},
-    {id: "3", title: "Third Item"}
-  ]
-
-  const selectedListItem = (item: dataType) => {
+  const handleRowPress = (item: dataType) => {
     console.log(item.title);
-    setSelectedId(item.id); 
+    setSelectedId(item.id); // Changes item's id which causes a re-render
   }
 
   const [selectedId, setSelectedId] = useState<string>("1");
@@ -40,28 +32,15 @@ export default function Index() {
             data = {DATA}
             keyExtractor = {(item: dataType) => item.id}
             extraData = {selectedId}
+            ItemSeparatorComponent={() => (
+              <ListItemSeparator color="blue"/>
+            )}
             renderItem = {({item}) =>(
-              <TouchableOpacity onPress = {() => selectedListItem(item)}>
-                <View style = {[styles.titleContainer,
-                  {
-                    backgroundColor:
-                      item.id === selectedId
-                      ? colors.primary
-                      : colors.secondary
-                  }
-                ]}>
-                  <Text 
-                    style = {[styles.titleText, 
-                      {
-                        color: 
-                          item.id === selectedId
-                          ? colors.text.light
-                          : colors.text.dark
-                      }
-                    ]}
-                  >{item.title}</Text>
-                </View>
-              </TouchableOpacity>
+              <ListItem
+              item = {item}
+              isSelected = {item.id === selectedId}
+              onPress={handleRowPress}
+              />
             )}
           />
         </View>
